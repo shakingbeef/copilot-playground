@@ -93,3 +93,16 @@ def test_list_tasks_pagination():
     response = client.get("/tasks/?skip=0&limit=5")
     assert response.status_code == 200
     assert len(response.json()) == 5
+
+    response = client.get("/tasks/?skip=5&limit=5")
+    assert response.status_code == 200
+    assert len(response.json()) == 5
+
+
+def test_list_tasks_default_limit():
+    """Issue #1: GET /tasks default limit should be 100."""
+    for i in range(105):
+        client.post("/tasks/", json={"title": f"Task {i}"})
+    response = client.get("/tasks/")
+    assert response.status_code == 200
+    assert len(response.json()) == 100
