@@ -92,11 +92,14 @@ def test_list_tasks_pagination():
         client.post("/tasks/", json={"title": f"Task {i}"})
     response = client.get("/tasks/?skip=0&limit=5")
     assert response.status_code == 200
-    assert len(response.json()) == 5
+    first_page = response.json()
+    assert len(first_page) == 5
 
     response = client.get("/tasks/?skip=5&limit=5")
     assert response.status_code == 200
-    assert len(response.json()) == 5
+    second_page = response.json()
+    assert len(second_page) == 5
+    assert [task["id"] for task in second_page] != [task["id"] for task in first_page]
 
 
 def test_list_tasks_default_limit():
