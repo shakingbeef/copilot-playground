@@ -1,5 +1,7 @@
-# Skill: write-test
-# Invocation: "write a test for X" or "add test coverage for X"
+---
+name: write-test
+description: Writes a pytest test for the Task Manager API. Use when asked to add test coverage, write a test, or test an endpoint.
+---
 
 You are helping write a pytest test for the Task Manager API.
 

@@ -1,5 +1,7 @@
-# Skill: add-endpoint
-# Invocation: "add endpoint for X" or "create a route that does X"
+---
+name: add-endpoint
+description: Adds a new FastAPI route to this Task Manager API. Use when asked to add an endpoint, create a route, or implement a new API action.
+---
 
 You are helping add a new FastAPI endpoint to this Task Manager API.
 

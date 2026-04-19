@@ -1,5 +1,7 @@
-# Skill: write-docs
-# Invocation: "document X" or "write docs for X" or "add OpenAPI annotations to X"
+---
+name: write-docs
+description: Adds documentation to this Task Manager API — OpenAPI annotations, Python docstrings, and docs/README updates. Use when asked to document an endpoint or feature.
+---
 
 You are helping document the Task Manager API. Documentation lives in three places — apply changes to whichever are relevant.
 
