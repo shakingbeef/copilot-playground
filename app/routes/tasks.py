@@ -62,5 +62,16 @@ def delete_task(task_id: int, db: Session = Depends(get_db)):
     db.delete(task)
     db.commit()
 
+
+@router.post("/{task_id}/complete")
+def complete_task(task_id: int, db: Session = Depends(get_db)):
+    task = db.query(Task).filter(Task.id == task_id).first()
+    if not task:
+        raise HTTPException(status_code=404, detail="Task not found")
+    task.status = "done"
+    db.commit()
+    db.refresh(task)
+    return task
+
 # MISSING (Issue #2): No POST /tasks/{id}/complete endpoint
 # MISSING (Issue #3): No GET /tasks?status= filtering support
