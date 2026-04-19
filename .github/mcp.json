@@ -6,8 +6,8 @@
       "description": "Browse the app source code"
     },
     "sqlite": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-sqlite", "--db-path", "./tasks.db"],
+      "command": "/Users/klaireb/copilot-playground/.venv/bin/mcp-server-sqlite",
+      "args": ["--db-path", "/Users/klaireb/copilot-playground/tasks.db"],
       "description": "Query the live task database"
     }
   }

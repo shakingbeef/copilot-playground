@@ -23,3 +23,9 @@ This is a FastAPI Task Manager API using SQLite via SQLAlchemy. It's a learning 
 - `add-endpoint`: Add a new FastAPI route following project conventions
 - `write-test`: Write a pytest test for an existing or new endpoint
 - `explain-route`: Explain what a route does and its edge cases
+- `write-docs`: Add OpenAPI annotations, docstrings, or docs/README updates for an endpoint
+
+## Agents Available
+- `api-designer`: Design new API endpoints (spec only, no implementation)
+- `code-reviewer`: Review code changes for bugs, missing error handling, and test coverage
+- `doc-writer`: Write documentation (OpenAPI annotations, docstrings, README updates) — never writes implementation code

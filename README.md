@@ -7,7 +7,7 @@ A hands-on repo for learning GitHub Copilot CLI features:
 | ☁️ **Cloud Agent** | Delegate the pre-loaded GitHub issues to Copilot — it will open PRs |
 | 🔌 **MCP** | Connect the SQLite and filesystem MCP servers, then query your app live |
 | 🛠️ **Skills** | Use the built-in skills, then write your own in `.github/skills/` |
-| 🤖 **Custom Agents** | Try the pre-defined agents in `.github/agents/`, then build your own |
+| 🤖 **Custom Agents** | Try the pre-defined agents in `.github/agents/`, then build your own — includes `api-designer`, `code-reviewer`, and `doc-writer` |
 | 🪝 **Hooks** | Hooks are pre-configured to lint on save and test before commit |
 
 ## 📁 Structure
