@@ -107,10 +107,26 @@ Work through these in order. Each exercise targets one feature.
 
 ---
 
+## Exercise 9: Custom Agents — Document an Endpoint
+
+**Goal:** Use the `doc-writer` agent and `write-docs` skill to add real documentation to the API.
+
+1. Run `/agent` and select `doc-writer`
+2. Ask: *"Document the GET /tasks/{id} endpoint — I want OpenAPI annotations, a docstring, and a one-liner for the README"*
+3. Review the output (it should never touch implementation logic)
+4. Run `/agent` to exit the agent, then invoke the `write-docs` skill to apply the changes
+5. Start the app and visit http://localhost:8000/docs — verify your annotations appear in the Swagger UI
+
+**What you're learning:** The `doc-writer` agent is constrained to documentation only, so it can't accidentally change behavior. Pairing a focused agent with a skill makes the workflow repeatable.
+
+---
+
 ## 🏆 Bonus: Chain Everything
 
 1. Use `api-designer` agent to spec a new `/tasks/{id}/assign` endpoint
 2. Use `add-endpoint` skill to implement it
 3. Use `write-test` skill to add coverage
-4. Use `code-reviewer` agent to review your changes
-5. Delegate the whole thing to cloud agent via `/delegate`
+4. Use `doc-writer` agent to draft the documentation
+5. Use `write-docs` skill to apply the docs
+6. Use `code-reviewer` agent to review your changes
+7. Delegate the whole thing to cloud agent via `/delegate`
