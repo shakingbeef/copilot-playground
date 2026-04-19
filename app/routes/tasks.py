@@ -20,8 +20,8 @@ class TaskUpdate(BaseModel):
 
 
 @router.get("/")
-def list_tasks(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
-    return db.query(Task).offset(skip).limit(limit).all()
+def list_tasks(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    return db.query(Task).order_by(Task.id).offset(skip).limit(limit).all()
 
 
 @router.post("/", status_code=201)
