@@ -20,9 +20,8 @@ class TaskUpdate(BaseModel):
 
 
 @router.get("/")
-def list_tasks(db: Session = Depends(get_db)):
-    # BUG (Issue #1): This returns ALL tasks with no pagination support
-    return db.query(Task).all()
+def list_tasks(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
+    return db.query(Task).offset(skip).limit(limit).all()
 
 
 @router.post("/", status_code=201)
