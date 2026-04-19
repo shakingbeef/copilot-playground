@@ -73,5 +73,4 @@ def complete_task(task_id: int, db: Session = Depends(get_db)):
     db.refresh(task)
     return task
 
-# MISSING (Issue #2): No POST /tasks/{id}/complete endpoint
 # MISSING (Issue #3): No GET /tasks?status= filtering support
