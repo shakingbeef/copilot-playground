@@ -54,7 +54,10 @@ def update_task(task_id: int, updates: TaskUpdate, db: Session = Depends(get_db)
     task = db.query(Task).filter(Task.id == task_id).first()
     if not task:
         raise HTTPException(status_code=404, detail="Task not found")
-    for field, value in updates.dict(exclude_none=True).items():
+    update_data = updates.model_dump(exclude_none=True)
+    if "status" in update_data and update_data["status"] not in VALID_STATUSES:
+        raise HTTPException(status_code=400, detail="Invalid status value")
+    for field, value in update_data.items():
         setattr(task, field, value)
     db.commit()
     db.refresh(task)
@@ -80,4 +83,3 @@ def complete_task(task_id: int, db: Session = Depends(get_db)):
     db.refresh(task)
     return task
 
-# MISSING (Issue #3): No GET /tasks?status= filtering support

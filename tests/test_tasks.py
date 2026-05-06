@@ -2,11 +2,15 @@ import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.pool import StaticPool
 from app.main import app
 from app.database import Base, get_db
 
-TEST_DB = "sqlite:///./test.db"
-engine = create_engine(TEST_DB, connect_args={"check_same_thread": False})
+engine = create_engine(
+    "sqlite:///:memory:",
+    connect_args={"check_same_thread": False},
+    poolclass=StaticPool,
+)
 TestingSession = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
@@ -116,3 +120,11 @@ def test_list_tasks_default_limit():
     response = client.get("/tasks/")
     assert response.status_code == 200
     assert len(response.json()) == 100
+
+
+def test_update_task_invalid_status():
+    """PUT /tasks/{id} with invalid status should return 400."""
+    created = client.post("/tasks/", json={"title": "Test task"}).json()
+    response = client.put(f"/tasks/{created['id']}", json={"status": "invalid"})
+    assert response.status_code == 400
+    assert response.json()["detail"] == "Invalid status value"
