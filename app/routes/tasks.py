@@ -19,9 +19,17 @@ class TaskUpdate(BaseModel):
     status: Optional[str] = None
 
 
+VALID_STATUSES = {"todo", "in_progress", "done"}
+
+
 @router.get("/")
-def list_tasks(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    return db.query(Task).order_by(Task.id).offset(skip).limit(limit).all()
+def list_tasks(skip: int = 0, limit: int = 100, status: Optional[str] = None, db: Session = Depends(get_db)):
+    query = db.query(Task)
+    if status:
+        if status not in VALID_STATUSES:
+            raise HTTPException(status_code=400, detail="Invalid status value")
+        query = query.filter(Task.status == status)
+    return query.order_by(Task.id).offset(skip).limit(limit).all()
 
 
 @router.post("/", status_code=201)
