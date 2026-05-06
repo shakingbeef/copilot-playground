@@ -86,6 +86,13 @@ def test_filter_tasks_by_status():
     assert len(results) == 1
 
 
+def test_filter_tasks_by_invalid_status():
+    """Issue #3: GET /tasks?status=invalid should return 400."""
+    response = client.get("/tasks/?status=invalid")
+    assert response.status_code == 400
+    assert response.json()["detail"] == "Invalid status value"
+
+
 def test_list_tasks_pagination():
     """Issue #1: GET /tasks should support ?skip=0&limit=10 pagination."""
     for i in range(15):
