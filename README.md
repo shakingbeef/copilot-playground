@@ -21,9 +21,14 @@ copilot-playground/
 │   └── routes/
 │       └── tasks.py            # Task CRUD routes
 ├── tests/                      # Pytest test suite (some intentionally failing!)
+├── scripts/
+│   ├── README.md               # Scripts documentation
+│   └── create_tech_debt_issues.py  # Tech debt issue creator
 ├── .github/
 │   ├── skills/                 # Custom Copilot skills
 │   ├── agents/                 # Custom Copilot agent definitions
+│   ├── workflows/              # GitHub Actions workflows
+│   ├── tech-debts.json         # Tech debt registry
 │   ├── copilot-instructions.md # Project-level Copilot instructions
 │   └── mcp.json                # MCP server configuration
 ├── docs/
@@ -44,3 +49,31 @@ Interactive docs: http://localhost:8000/docs
 ## 🎓 Start Here
 
 Open `docs/exercises.md` for step-by-step exercises for each feature.
+
+## 🛠️ Tech Debt Management
+
+This repository includes a systematic approach to tracking and managing technical debt:
+
+- **Tech Debt Registry**: `.github/tech-debts.json` documents all identified tech debts with details, priority, and suggested fixes
+- **Issue Creation Script**: `scripts/create_tech_debt_issues.py` converts tech debt definitions into GitHub issues
+- **Automated Workflow**: `.github/workflows/create-tech-debt-issues.yml` can automatically create issues
+
+### Current Tech Debts
+
+4 tech debts have been identified:
+1. SQLAlchemy 2.0 migration (declarative_base) — **Medium**
+2. FastAPI lifespan event handler migration — **Medium**
+3. Pydantic v2 `.model_dump()` migration — **Low**
+4. Python 3.12 datetime.utcnow() deprecation — **Low**
+
+### Create Issues
+
+```bash
+# Option 1: Run the script directly
+python3 scripts/create_tech_debt_issues.py
+
+# Option 2: Use GitHub Actions (via web UI)
+# Go to Actions > Create Tech Debt Issues > Run workflow
+```
+
+For more details, see `scripts/README.md`.
