@@ -1,0 +1,31 @@
+name: Create Tech Debt Issues
+
+on:
+  workflow_dispatch:
+    description: "Manually trigger creation of GitHub issues for identified tech debts"
+  schedule:
+    # Run monthly to check for new tech debts
+    - cron: "0 0 1 * *"
+
+jobs:
+  create_issues:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12"
+
+      - name: Run tech debt analysis and create issues
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd ${{ github.workspace }}
+          python3 scripts/create_tech_debt_issues.py
