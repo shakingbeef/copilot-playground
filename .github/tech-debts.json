@@ -1,0 +1,30 @@
+[
+  {
+    "id": "sqlalchemy-declarative-base",
+    "title": "Migrate from declarative_base() to sqlalchemy.orm.declarative_base()",
+    "description": "The SQLAlchemy `declarative_base()` function is deprecated as of SQLAlchemy 2.0 and should be imported from `sqlalchemy.orm.declarative_base()` instead.\n\n**Location**: `app/database.py:10`\n\n**Current code**:\n```python\nfrom sqlalchemy.ext.declarative import declarative_base\nBase = declarative_base()\n```\n\n**Fix**:\n```python\nfrom sqlalchemy.orm import declarative_base\nBase = declarative_base()\n```\n\n**Impact**: Ensures compatibility with SQLAlchemy 2.0+ and future versions.",
+    "labels": ["tech-debt", "sqlalchemy", "migration"],
+    "priority": "medium"
+  },
+  {
+    "id": "fastapi-lifespan-event",
+    "title": "Migrate from @app.on_event('startup') to lifespan event handlers",
+    "description": "The FastAPI `@app.on_event()` decorator is deprecated and should be replaced with lifespan event handlers for better control over application lifecycle.\n\n**Location**: `app/main.py:7`\n\n**Current code**:\n```python\n@app.on_event(\"startup\")\ndef on_startup():\n    init_db()\n```\n\n**Fix**: Use lifespan context manager instead:\n```python\nfrom contextlib import asynccontextmanager\n\n@asynccontextmanager\nasync def lifespan(app):\n    init_db()\n    yield\n\napp = FastAPI(lifespan=lifespan)\n```\n\n**Reference**: https://fastapi.tiangolo.com/advanced/events/\n\n**Impact**: Ensures forward compatibility with future FastAPI versions.",
+    "labels": ["tech-debt", "fastapi", "migration"],
+    "priority": "medium"
+  },
+  {
+    "id": "pydantic-dict-method",
+    "title": "Replace Pydantic .dict() with .model_dump()",
+    "description": "In Pydantic v2, the `.dict()` method is deprecated and should be replaced with `.model_dump()` for better clarity and to avoid confusion with Python's built-in `dict` type.\n\n**Location**: `app/routes/tasks.py:57`\n\n**Current code**:\n```python\nfor field, value in updates.dict(exclude_none=True).items():\n    setattr(task, field, value)\n```\n\n**Fix**:\n```python\nfor field, value in updates.model_dump(exclude_none=True).items():\n    setattr(task, field, value)\n```\n\n**Impact**: Ensures compatibility with Pydantic v2+ and improves code clarity.",
+    "labels": ["tech-debt", "pydantic", "migration"],
+    "priority": "low"
+  },
+  {
+    "id": "python-datetime-utcnow",
+    "title": "Replace datetime.utcnow() with timezone-aware datetime.now()",
+    "description": "Python 3.12 deprecated `datetime.datetime.utcnow()` in favor of timezone-aware `datetime.now(datetime.UTC)` to promote better datetime handling practices.\n\n**Location**: SQLAlchemy internal code (test warnings)\n\n**Note**: This appears in SQLAlchemy's schema.py generated code. Monitor for updates to SQLAlchemy that fix this on their end. May be automatically resolved with SQLAlchemy upgrades.\n\n**Impact**: Prevents deprecation warnings in Python 3.12+ and improves datetime handling robustness.",
+    "labels": ["tech-debt", "python", "datetime"],
+    "priority": "low"
+  }
+]
